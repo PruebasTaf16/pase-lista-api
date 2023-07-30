@@ -1,1 +1,1 @@
-export const FRONTEND_URL = "https://lovely-froyo-71891d.netlify.app"
+export const FRONTEND_URL = "https://moonlit-youtiao-0fe4eb.netlify.app/"
