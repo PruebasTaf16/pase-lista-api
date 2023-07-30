@@ -1,0 +1,1 @@
+Variables que nunca van a cambiar en nuestra aplicación, como la URL al frontend

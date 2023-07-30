@@ -1,0 +1,1 @@
+Aquí se guardan todos los modelos (clases Schema) para generar las entidades en la base de datos desde MongoDB

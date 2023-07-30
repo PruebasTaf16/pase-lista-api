@@ -1,0 +1,1 @@
+Aquí se tiene la configuración de la base de datos para conectarse a ella

@@ -1,0 +1,1 @@
+export const FRONTEND_URL = "https://lovely-froyo-71891d.netlify.app"

@@ -1,0 +1,6 @@
+Aquí se tiene toda la lógica de la aplicación para conectarse entre todas las rutas y sus respectivas peticiones HTTP
+
+POST (crear)
+GET (leer)
+PUT (editar)
+DELETE (eliminar)
