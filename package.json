@@ -4,6 +4,9 @@
   "description": "",
   "main": "./src/index.js",
   "type": "module",
+  "engines": {
+    "node": ">=14.20.1"
+  },
   "scripts": {
     "development": "concurrently \"npm run dev\" \"npm run watch\"",
     "dev": "nodemon ./src/index.js",
