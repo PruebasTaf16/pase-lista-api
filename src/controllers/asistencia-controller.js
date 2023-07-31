@@ -177,7 +177,7 @@ rutas.get('/hoy', async (req, res) => {
         const diaDB = await DiasModel.findOne({
             fecha: fechaGenerada
         });
-
+        console.log(diaDB);
         if (!diaDB) {
             res.status(200).json({usuarios: [], asistencias: []});
             return;
