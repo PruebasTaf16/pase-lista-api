@@ -174,6 +174,8 @@ rutas.get('/hoy', async (req, res) => {
         const listadoUsuarios = await UsuarioModel.find({}).populate('idRol');
 
         const fechaGenerada = obtenerFechaLimpia(new Date())
+        const dias = await DiasModel.find({});
+        console.log(dias);
         const diaDB = await DiasModel.findOne({
             fecha: fechaGenerada
         });
