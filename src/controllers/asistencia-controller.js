@@ -169,6 +169,32 @@ rutas.post('/justificar', async (req, res) => {
         res.status(500).json({msg: 'Error'});
     }
 })
+rutas.get('/hoy', async (req, res) => {
+    try {
+        const listadoUsuarios = await UsuarioModel.find({}).populate('idRol');
+
+        const fechaGenerada = obtenerFechaLimpia(new Date())
+        const diaDB = await DiasModel.findOne({
+            fecha: fechaGenerada
+        });
+
+        if (!diaDB) {
+            res.status(200).json({usuarios: [], asistencias: []});
+            return;
+        };
+        /**Lista de asistencias para comparar */
+        const asistenciasHoy = await AsistenciasModel.find({
+            idDia: diaDB._id,
+        }).populate('idUsuario').populate('idDia').populate('idEstadoAsistencia');
+
+        res.status(200).json({usuarios: listadoUsuarios, asistencias: asistenciasHoy});
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({
+            msg: 'Error'
+        })
+    }
+});
 /**Se obtiene la información completa sobre la asistencia registrada del día de hoy */
 rutas.get('/hoy/:usuario/:dia', async (req, res) => {
     const idUsuario = req.params.usuario
