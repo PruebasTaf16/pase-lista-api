@@ -176,13 +176,13 @@ rutas.get('/hoy', async (req, res) => {
         const fechaGenerada = obtenerFechaLimpia(new Date())
 
         const dias = await DiasModel.find({});
-        const diaDB = dias.filter(d => d.fecha == fechaGenerada);
+        const diaDB = dias.filter(d => d.fecha == fechaGenerada)[0];
         console.log(diaDB)
         if (!diaDB) {
             res.status(200).json({usuarios: [], asistencias: []});
             return;
         };
-        
+
         /**Lista de asistencias para comparar */
         const asistenciasHoy = await AsistenciasModel.find({
             idDia: diaDB._id,
