@@ -174,15 +174,14 @@ rutas.get('/hoy', async (req, res) => {
         const listadoUsuarios = await UsuarioModel.find({}).populate('idRol');
 
         const fechaGenerada = obtenerFechaLimpia(new Date())
+        const diaDB = await DiasModel.findOne({
+            fecha: fechaGenerada
+        });
 
-        const dias = await DiasModel.find({});
-        const diaDB = dias.filter(d => d.fecha == fechaGenerada)[0];
-        console.log(diaDB)
         if (!diaDB) {
             res.status(200).json({usuarios: [], asistencias: []});
             return;
         };
-
         /**Lista de asistencias para comparar */
         const asistenciasHoy = await AsistenciasModel.find({
             idDia: diaDB._id,
