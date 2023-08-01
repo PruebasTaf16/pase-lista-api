@@ -67,6 +67,7 @@ rutas.post('/registrar', async (req, res) => {
         if (asistenciaDB) return res.status(401).json({msg: 'Ya se registró asistencia o justificación para este día'});
 
         const horaRegistro = new Date(obtenerFechaFormateada());
+        horaRegistro.setHours(horaRegistro.getHours() - 6); //tricky
         console.log(horaRegistro);
 
         const horaMin = new Date(usuarioDB.idRol.horarioEntrada);
