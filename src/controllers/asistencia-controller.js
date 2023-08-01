@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { AsistenciasModel, DiasModel, EstadosAsistenciaModel, EstadosJustificanteModel, JustificantesModel, MotivosInasistenciaModel, UsuarioModel } from "../models/index.js";
-import { obtenerFechaLimpia } from "../utils/fechas-utils.js";
+import { obtenerFechaLimpia, obtenerFechaFormateada } from "../utils/fechas-utils.js";
 
 const rutas = Router({mergeParams: true})
 
@@ -66,24 +66,28 @@ rutas.post('/registrar', async (req, res) => {
         const asistenciaDB = await AsistenciasModel.findOne({idDia: data.idDia, idUsuario: data.idUsuario});
         if (asistenciaDB) return res.status(401).json({msg: 'Ya se registró asistencia o justificación para este día'});
 
-        const horaRegistro = new Date();
+        const horaRegistro = new Date(obtenerFechaFormateada());
+        console.log(horaRegistro);
 
         const horaMin = new Date(usuarioDB.idRol.horarioEntrada);
         horaMin.setFullYear(horaRegistro.getFullYear());
         horaMin.setMonth(horaRegistro.getMonth());
         horaMin.setDate(horaRegistro.getDate());
         horaMin.setMinutes(horaMin.getMinutes() - usuarioDB.idRol.tiempoAntesEntrada);
+        console.log(horaMin);
 
         const horaEnPunto = new Date(usuarioDB.idRol.horarioEntrada);
         horaEnPunto.setFullYear(horaRegistro.getFullYear());
         horaEnPunto.setMonth(horaRegistro.getMonth());
         horaEnPunto.setDate(horaRegistro.getDate());
+        console.log(horaEnPunto);
 
         const horaMax = new Date(usuarioDB.idRol.horarioEntrada);
         horaMax.setFullYear(horaRegistro.getFullYear());
         horaMax.setMonth(horaRegistro.getMonth());
         horaMax.setDate(horaRegistro.getDate());
         horaMax.setMinutes(horaMax.getMinutes() + usuarioDB.idRol.tiempoMaxTolerancia);
+        console.log(horaMax);
 
         // console.log(horaRegistro);
         // console.log(horaMin);

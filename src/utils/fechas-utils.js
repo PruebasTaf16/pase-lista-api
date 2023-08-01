@@ -33,3 +33,21 @@ export function obtenerFechaLimpia(fecha) {
     
     return fechaLimpia
 }
+
+
+export function obtenerFechaFormateada() {
+  // Obtener la fecha actual
+  const horaRegistro = new Date();
+
+  // Definir la zona horaria de México (GMT-6)
+  const zonaHorariaMexico = 'America/Mexico_City';
+
+  // Obtener la fecha con la zona horaria de México
+  const fechaMexico = moment.tz(horaRegistro, zonaHorariaMexico);
+
+  // Formatear la fecha en el formato deseado
+  const formatoFecha = 'YYYY-MM-DDTHH:mm:ss.SSSZ';
+  const fechaFormateada = fechaMexico.format(formatoFecha);
+
+  return fechaFormateada;
+}
