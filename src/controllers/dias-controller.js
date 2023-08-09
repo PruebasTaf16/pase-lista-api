@@ -19,7 +19,8 @@ rutas.post('/generar-hoy', async (req, res) => {
         if (diaDB) {
             if (diaDB.fecha.toDateString() === fechaGenerada.toDateString()) return res.status(403).json({msg: 'Ya se ha generado la fecha de Hoy'})
         } else {
-            const dia = new DiasModel({fecha: fechaGenerada, habilitado: fechaGenerada.getDay() === 0 ? false : true})
+            // const dia = new DiasModel({fecha: fechaGenerada, habilitado: fechaGenerada.getDay() === 0 ? false : true})
+            const dia = new DiasModel({fecha: fechaGenerada, habilitado: true});
 
             await dia.save()
 

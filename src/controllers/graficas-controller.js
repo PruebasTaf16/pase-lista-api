@@ -60,6 +60,90 @@ rutas.get('/asistencia-hoy', async (req, res) => {
         console.log(e)
         res.status(500).json({msg: 'Error'});
     }
-})
+});
+
+rutas.post('/asistencia-dia', async (req, res) => {
+    const datos = req.body;
+    try {
+        const usuariosDB = await UsuarioModel.find();
+        const asistenciasDB = await AsistenciasModel.find({
+            idDia: datos.dia,
+            // horaAsistencia: {
+            //     $gte: new Date(new Date(datos.fecha).setHours(0, 0, 0, 0)),
+            //     $lt: new Date(new Date(datos.fecha).setHours(23, 59, 59, 999)),
+            // }
+        }).populate('idEstadoAsistencia')
+
+        let asistencia = asistenciasDB.filter(asist => asist.idEstadoAsistencia.nombre == 'Asistencia normal').length;
+        let faltaJustificada = asistenciasDB.filter(asist => asist.idEstadoAsistencia.nombre == 'Inasistencia justificada').length;
+        let esperandoJustificacion = asistenciasDB.filter(asist => asist.idEstadoAsistencia.nombre == 'Esperando Justificación').length;
+        let inasistencia = asistenciasDB.filter(asist => asist.idEstadoAsistencia.nombre == 'Inasistencia').length;
+        let retraso = asistenciasDB.filter(asist => asist.idEstadoAsistencia.nombre == 'Asistencia con retraso').length;
+
+        let sinAccion = usuariosDB.length - (asistencia + faltaJustificada + esperandoJustificacion + inasistencia + retraso);
+
+        inasistencia += sinAccion;
+        console.log({
+            data: {
+                asistencia: {
+                    label: 'Asistencia',
+                    cantidad: asistencia
+                }, 
+                faltaJustificada: {
+                    label: 'Falta justificada',
+                    cantidad: faltaJustificada
+                }, 
+                esperandoJustificacion: {
+                    label: 'Esperando justificación',
+                    cantidad: esperandoJustificacion
+                }, 
+                inasistencia: {
+                    label: 'Inasistencia',
+                    cantidad: inasistencia,
+                },
+                retraso: {
+                    label: 'Asistencia con retraso',
+                    cantidad: retraso,
+                },
+                todos: {
+                    label: 'Todos',
+                    cantidad: usuariosDB.length,
+                },
+            }
+        })
+        res.status(200).json({
+            msg: 'Listado', 
+            data: {
+                asistencia: {
+                    label: 'Asistencia',
+                    cantidad: asistencia
+                }, 
+                faltaJustificada: {
+                    label: 'Falta justificada',
+                    cantidad: faltaJustificada
+                }, 
+                esperandoJustificacion: {
+                    label: 'Esperando justificación',
+                    cantidad: esperandoJustificacion
+                }, 
+                inasistencia: {
+                    label: 'Inasistencia',
+                    cantidad: inasistencia,
+                },
+                retraso: {
+                    label: 'Asistencia con retraso',
+                    cantidad: retraso,
+                },
+                todos: {
+                    label: 'Todos',
+                    cantidad: usuariosDB.length,
+                },
+            }
+        });
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({msg: 'Error'});
+    }
+});
 
 export const graficasRouter = Router().use('/graficas', rutas);

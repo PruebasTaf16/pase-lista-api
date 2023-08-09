@@ -7,3 +7,4 @@ export * from "./estados-asistencia-model.js";
 export * from "./justificantes-model.js";
 export * from "./motivos-inasistencia-model.js";
 export * from "./estados-justificante-model.js";
+export * from "./ubicaciones-model.js";

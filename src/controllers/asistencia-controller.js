@@ -174,6 +174,30 @@ rutas.post('/justificar', async (req, res) => {
         res.status(500).json({msg: 'Error'});
     }
 })
+rutas.post('/dia', async (req, res) => {
+    const datos = req.body;
+    try {
+        const listadoUsuarios = await UsuarioModel.find({}).populate('idRol');
+
+        const fechaGenerada = obtenerFechaLimpia(new Date(datos.fecha));
+        const diaDB = await DiasModel.findOne({fecha: fechaGenerada});
+        console.log(fechaGenerada, ' ---> en la DB', diaDB);
+        if (!diaDB) {
+            res.status(200).json({msg: "Sin día registrado",usuarios: [], asistencias: []});
+            return;
+        }
+
+        const asistenciasFecha = await AsistenciasModel.find({idDia: diaDB._id})
+        .populate('idUsuario').populate('idDia').populate('idEstadoAsistencia');
+
+        res.status(200).json({dia: diaDB._id, usuarios: listadoUsuarios, asistencias: asistenciasFecha});
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({
+            msg: 'Error'
+        })
+    }
+})
 rutas.get('/hoy', async (req, res) => {
     try {
         const listadoUsuarios = await UsuarioModel.find({}).populate('idRol');
