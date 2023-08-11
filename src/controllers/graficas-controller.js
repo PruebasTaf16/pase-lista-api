@@ -14,7 +14,7 @@ rutas.get('/asistencia-hoy', async (req, res) => {
         horaGte.setSeconds(0);
         horaGte.setMilliseconds(0);
         const horaLt = new Date();
-        horaLt.setHours(23-6);
+        horaLt.setHours(horaGte.getHours()+23);
         horaLt.setMinutes(59);
         horaLt.setSeconds(59);
         horaLt.setMilliseconds(59);
