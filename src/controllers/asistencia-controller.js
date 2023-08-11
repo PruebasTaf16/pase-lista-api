@@ -201,8 +201,9 @@ rutas.post('/dia', async (req, res) => {
 rutas.get('/hoy', async (req, res) => {
     try {
         const listadoUsuarios = await UsuarioModel.find({}).populate('idRol');
-
-        const fechaGenerada = obtenerFechaLimpia(new Date()-6)
+        const fecha = new Date();
+        fecha.setHours(fecha.getHours() - 6);
+        const fechaGenerada = obtenerFechaLimpia(fecha);
         const diaDB = await DiasModel.findOne({
             fecha: fechaGenerada
         });
