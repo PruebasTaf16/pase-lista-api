@@ -17,11 +17,11 @@ rutas.get('/listado-semanal/:id', async (req, res) => {
 
         const inicioSemana = new Date(ahora);
         inicioSemana.setDate(ahora.getDate() - ahora.getDay() + 1);
-        inicioSemana.setHours(0, 0, 0, 0);
+        inicioSemana.setHours(-6, 0, 0, 0);
 
         const finSemana = new Date(ahora);
         finSemana.setDate(ahora.getDate() - ahora.getDay() + 7);
-        finSemana.setHours(0, 0, 0, 0);
+        finSemana.setHours(-6, 0, 0, 0);
 
         const diasDB = await DiasModel.find({});
         
@@ -202,7 +202,7 @@ rutas.get('/hoy', async (req, res) => {
     try {
         const listadoUsuarios = await UsuarioModel.find({}).populate('idRol');
 
-        const fechaGenerada = obtenerFechaLimpia(new Date())
+        const fechaGenerada = obtenerFechaLimpia(new Date()-6)
         const diaDB = await DiasModel.findOne({
             fecha: fechaGenerada
         });
