@@ -38,7 +38,9 @@ rutas.post('/generar-hoy', async (req, res) => {
 })
 /**Se obtiene la información del día de hoy (aquí se saca el ID para generar el QR en la app de escritorio) */
 rutas.get('/hoy', async (req, res) => {
-    const fechaGenerada = obtenerFechaLimpia(new Date())
+    const fecha = new Date();
+    fecha.setHours(fecha.getHours() - 6);
+    const fechaGenerada = obtenerFechaLimpia(fecha);
     try {
         const diaDB = await DiasModel.findOne({
             fecha: fechaGenerada
