@@ -78,7 +78,9 @@ async function iniciarServer() {
     console.log("API corriendo");
 
     setInterval(async () => {
-      const fechaGenerada = obtenerFechaLimpia(new Date());
+      const fecha = new Date();
+      fecha.setHours(fecha.getHours() - 6);
+      const fechaGenerada = obtenerFechaLimpia(fecha);
 
       try {
         const diaDB = await DiasModel.findOne({
