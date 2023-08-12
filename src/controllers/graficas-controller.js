@@ -8,10 +8,14 @@ const rutas = Router({mergeParams: true})
 rutas.get('/asistencia-hoy', async (req, res) => {
     try {
         const usuariosDB = await UsuarioModel.find();
+        const fechaGte = new Date();
+        fechaGte.setHours(fechaGte.getHours()-6);
+        const fechaLt = new Date();
+        fechaLt.setHours(fechaLt.getHours()-6)-m
         const asistenciasDB = await AsistenciasModel.find({
             horaAsistencia: {
-                $gte: new Date(new Date().setHours(0, 0, 0, 0)),
-                $lt: new Date(new Date().setHours(23, 59, 59, 999)),
+                $gte: fechaGte.setHours(0, 0, 0, 0),
+                $lt: fechaLt.setHours(23, 59, 59, 999),
             }
         }).populate('idEstadoAsistencia')
 
