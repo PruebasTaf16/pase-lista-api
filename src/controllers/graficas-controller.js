@@ -11,7 +11,7 @@ rutas.get('/asistencia-hoy', async (req, res) => {
         const fechaGte = new Date();
         fechaGte.setHours(fechaGte.getHours()-6);
         const fechaLt = new Date();
-        fechaLt.setHours(fechaLt.getHours()-6)-m
+        fechaLt.setHours(fechaLt.getHours()-6)
         const asistenciasDB = await AsistenciasModel.find({
             horaAsistencia: {
                 $gte: fechaGte.setHours(0, 0, 0, 0),
