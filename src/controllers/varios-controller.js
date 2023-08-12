@@ -6,8 +6,10 @@ const rutas = Router({mergeParams: true});
 
 /**Trae todo el listado de justificantes para aprobar o desaprobar el día de hoy */
 rutas.get('/listado-justificantes-hoy', async (req, res) => {
+    const fecha = new Date();
+    fecha.setHours(fecha.getHours()-6);
     try {
-        const asistenciasDB = await AsistenciasModel.find({horaAsistencia: obtenerFechaLimpia(new Date())})
+        const asistenciasDB = await AsistenciasModel.find({horaAsistencia: obtenerFechaLimpia(fecha)})
             .populate('idUsuario')
             .populate('idEstadoAsistencia');
 
