@@ -150,11 +150,13 @@ rutas.post('/justificar', async (req, res) => {
 
         const estadoJustificante = await EstadosJustificanteModel.findOne({nombre: 'Enviado'});
 
+        const fecha = new Date();
+        fecha.setHours(fecha.getHours()-6);
         const asistencia = new AsistenciasModel({
             idDia: data.idDia,
             idUsuario: data.idUsuario,
             idEstadoAsistencia: estadoAsistencia._id,
-            horaAsistencia: obtenerFechaLimpia(new Date()),
+            horaAsistencia: obtenerFechaLimpia(fecha),
         });
 
         await asistencia.save();
